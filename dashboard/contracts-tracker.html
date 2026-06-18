@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Contracts, VOs &amp; Subconsultants Dashboard</title>
+  <link rel="shortcut icon" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="../assets/css/core/libs.min.css">
+  <link rel="stylesheet" href="../assets/css/hope-ui.min.css?v=4.0.0">
+  <link rel="stylesheet" href="../assets/css/custom.min.css?v=4.0.0">
+  <link rel="stylesheet" href="../assets/css/dark.min.css">
+  <link rel="stylesheet" href="../assets/css/customizer.min.css">
+  <link rel="stylesheet" href="../assets/css/rtl.min.css">
+  <link rel="stylesheet" href="../assets/css/contracts-dashboard.css">
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loading"><div class="loader simple-loader"><div class="loader-body"></div></div></div>
+
+  <!-- ======== Sidebar ======== -->
+  <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all">
+    <div class="sidebar-header d-flex align-items-center justify-content-start">
+      <a href="#" class="navbar-brand">
+        <div class="logo-main">
+          <div class="logo-normal">
+            <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
+              <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
+              <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
+              <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="logo-mini">
+            <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
+              <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
+              <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
+              <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+        <h4 class="logo-title">Contracts</h4>
+      </a>
+      <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+        <i class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </i>
+      </div>
+    </div>
+    <div class="sidebar-body pt-0 data-scrollbar">
+      <div class="sidebar-list">
+        <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
+          <li class="nav-item static-item">
+            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+              <span class="default-icon">Dashboard</span><span class="mini-icon">-</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#" data-page="overview">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z" fill="currentColor"></path></svg></i>
+              <span class="item-name">Overview</span>
+            </a>
+          </li>
+          <li class="nav-item static-item">
+            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+              <span class="default-icon">Trackers</span><span class="mini-icon">-</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="contracts">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path><path d="M8.08008 15.74H12.9201C13.3701 15.74 13.7501 15.36 13.7501 14.91C13.7501 14.46 13.3701 14.08 12.9201 14.08H8.08008C7.63008 14.08 7.25008 14.46 7.25008 14.91C7.25008 15.36 7.63008 15.74 8.08008 15.74ZM8.08008 11.9H15.9201C16.3701 11.9 16.7501 11.52 16.7501 11.07C16.7501 10.62 16.3701 10.24 15.9201 10.24H8.08008C7.63008 10.24 7.25008 10.62 7.25008 11.07C7.25008 11.52 7.63008 11.9 8.08008 11.9ZM8.08008 8.06H15.9201C16.3701 8.06 16.7501 7.68 16.7501 7.23C16.7501 6.78 16.3701 6.4 15.9201 6.4H8.08008C7.63008 6.4 7.25008 6.78 7.25008 7.23C7.25008 7.68 7.63008 8.06 8.08008 8.06Z" fill="currentColor"></path></svg></i>
+              <span class="item-name">Contracts</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="voClient">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path><path d="M11.2451 15.3843V16.6783C11.2451 17.0923 11.5811 17.4283 11.9951 17.4283C12.4091 17.4283 12.7451 17.0923 12.7451 16.6783V15.3843C12.7451 14.9703 12.4091 14.6343 11.9951 14.6343C11.5811 14.6343 11.2451 14.9703 11.2451 15.3843Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10.211 14.5565C10.111 14.9195 9.762 15.1515 9.384 15.1015C6.833 14.7455 4.395 13.8405 2.337 12.4815C2.126 12.3435 2 12.1075 2 11.8555V8.38949C2 6.28949 3.712 4.58149 5.817 4.58149H7.784C7.972 3.12949 9.202 2.00049 10.704 2.00049H13.286C14.787 2.00049 16.018 3.12949 16.206 4.58149H18.183C20.282 4.58149 21.99 6.28949 21.99 8.38949V11.8555C21.99 12.1075 21.863 12.3425 21.654 12.4815C19.592 13.8465 17.144 14.7555 14.576 15.1105C14.541 15.1155 14.507 15.1175 14.473 15.1175C14.134 15.1175 13.831 14.8885 13.746 14.5525C13.544 13.7565 12.821 13.1995 11.99 13.1995C11.148 13.1995 10.433 13.7445 10.211 14.5565ZM13.286 3.50049H10.704C10.031 3.50049 9.469 3.96049 9.301 4.58149H14.688C14.52 3.96049 13.958 3.50049 13.286 3.50049Z" fill="currentColor"></path></svg></i>
+              <span class="item-name">VO to Client</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="voSubcon">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M21.25 13.4764C20.429 13.4764 19.761 12.8145 19.761 12.001C19.761 11.1865 20.429 10.5246 21.25 10.5246C21.449 10.5246 21.64 10.4463 21.78 10.3076C21.921 10.1679 22 9.97864 22 9.78146L21.999 7.10415C21.999 4.84102 20.14 3 17.856 3H6.144C3.86 3 2.001 4.84102 2.001 7.10415L2 9.86766C2 10.0648 2.079 10.2541 2.22 10.3938C2.36 10.5325 2.551 10.6108 2.75 10.6108C3.599 10.6108 4.239 11.2083 4.239 12.001C4.239 12.8145 3.571 13.4764 2.75 13.4764C2.336 13.4764 2 13.8093 2 14.2195V16.8949C2 19.158 3.858 21 6.143 21H17.857C20.142 21 22 19.158 22 16.8949V14.2195C22 13.8093 21.664 13.4764 21.25 13.4764Z" fill="currentColor"></path><path d="M15.4303 11.5887L14.2513 12.7367L14.5303 14.3597C14.5783 14.6407 14.4653 14.9177 14.2343 15.0837C14.0053 15.2517 13.7063 15.2727 13.4543 15.1387L11.9993 14.3737L10.5413 15.1397C10.4333 15.1967 10.3153 15.2267 10.1983 15.2267C10.0453 15.2267 9.89434 15.1787 9.76434 15.0847C9.53434 14.9177 9.42134 14.6407 9.46934 14.3597L9.74734 12.7367L8.56834 11.5887C8.36434 11.3907 8.29334 11.0997 8.38134 10.8287C8.47034 10.5587 8.70034 10.3667 8.98134 10.3267L10.6073 10.0897L11.3363 8.61268C11.4633 8.35868 11.7173 8.20068 11.9993 8.20068H12.0013C12.2843 8.20168 12.5383 8.35968 12.6633 8.61368L13.3923 10.0897L15.0213 10.3277C15.2993 10.3667 15.5293 10.5587 15.6173 10.8287C15.7063 11.0997 15.6353 11.3907 15.4303 11.5887Z" fill="currentColor"></path></svg></i>
+              <span class="item-name">VO to Subconsultant</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="sca">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.8877 10.8967C19.2827 10.7007 20.3567 9.50473 20.3597 8.05573C20.3597 6.62773 19.3187 5.44373 17.9537 5.21973" fill="currentColor"></path><path opacity="0.4" d="M19.7285 14.2505C21.0795 14.4525 22.0225 14.9255 22.0225 15.9005C22.0225 16.5715 21.5785 17.0075 20.8605 17.2815" fill="currentColor"></path><path d="M6.09016 10.8967C4.69516 10.7007 3.62116 9.50473 3.61816 8.05573C3.61816 6.62773 4.65916 5.44373 6.02416 5.21973" fill="currentColor"></path><path opacity="0.4" d="M4.24957 14.2505C2.89857 14.4525 1.95557 14.9255 1.95557 15.9005C1.95557 16.5715 2.39957 17.0075 3.11757 17.2815" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M11.9886 14.914C9.09857 14.914 6.60059 15.3507 6.60059 17.1154C6.60059 18.88 9.08459 19.3327 11.9886 19.3327C14.8786 19.3327 17.3766 18.8961 17.3766 17.1314C17.3766 15.3667 14.8926 14.914 11.9886 14.914Z" fill="currentColor"></path><path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd" d="M11.9886 12.4467C13.9496 12.4467 15.5286 10.8684 15.5286 8.90638C15.5286 6.94538 13.9496 5.36707 11.9886 5.36707C10.0276 5.36707 8.44958 6.94538 8.44958 8.90638C8.44958 10.8684 10.0276 12.4467 11.9886 12.4467Z" fill="currentColor"></path></svg></i>
+              <span class="item-name">Subconsultants</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="pipeline">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v4M16 2v4M3.5 9.09h17M21 8.5V17c0 3-1.5 5-5 5H8c-3.5 0-5-2-5-5V8.5c0-3 1.5-5 5-5h8c3.5 0 5 2 5 5Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path opacity="0.4" d="M15.695 13.7h.009M15.695 16.7h.009M11.995 13.7h.01M11.995 16.7h.01M8.294 13.7h.01M8.294 16.7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+              <span class="item-name">Project Pipeline</span>
+            </a>
+          </li>
+          <li><hr class="hr-horizontal"></li>
+          <li class="nav-item static-item">
+            <a class="nav-link static-item disabled" href="#" tabindex="-1">
+              <span class="default-icon">Configuration</span><span class="mini-icon">-</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="rulesConfig">
+              <i class="icon"><svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.8064 7.62361L20.184 6.54352C19.6574 5.6296 18.4905 5.31432 17.5753 5.83872V5.83872C17.1397 6.09534 16.6198 6.16815 16.1305 6.04109C15.6411 5.91402 15.2224 5.59752 14.9666 5.16137C14.8021 4.88415 14.7137 4.56839 14.7103 4.24604V4.24604C14.7251 3.72922 14.5302 3.2284 14.1698 2.85767C13.8094 2.48694 13.3143 2.27786 12.7973 2.27808H11.5433C11.037 2.27807 10.5513 2.47991 10.1937 2.83895C9.83614 3.19798 9.63649 3.68459 9.63889 4.19088V4.19088C9.62417 5.23693 8.77248 6.07681 7.72632 6.07674C7.40397 6.07336 7.08821 5.98494 6.81099 5.82041V5.82041C5.89582 5.29601 4.72887 5.61129 4.20229 6.52522L3.5765 7.62361C3.05023 8.53639 3.36065 9.70261 4.26888 10.2323V10.2323C4.86374 10.5739 5.22508 11.2056 5.22508 11.889C5.22508 12.5725 4.86374 13.2041 4.26888 13.5458V13.5458C3.36228 14.0719 3.05087 15.2353 3.5765 16.1453V16.1453L4.20898 17.2346C4.45573 17.6798 4.86893 18.0083 5.35648 18.1474C5.84402 18.2866 6.36697 18.2249 6.81099 17.9756V17.9756C7.24733 17.7213 7.76683 17.6516 8.25456 17.7822C8.74229 17.9128 9.15789 18.2327 9.40993 18.6716C9.57445 18.9489 9.66287 19.2646 9.66628 19.587V19.587C9.66628 20.6435 10.5227 21.5 11.5792 21.5H12.8332C13.8864 21.5 14.7412 20.6491 14.7474 19.5765V19.5765C14.7449 19.0691 14.9455 18.5818 15.3042 18.2232C15.663 17.8644 16.1503 17.6638 16.6576 17.6663C16.9788 17.6749 17.2929 17.7636 17.5753 17.9247V17.9247C18.4869 18.4498 19.6521 18.1398 20.184 17.2302V17.2302L20.8064 16.1453C21.0615 15.7075 21.1315 15.186 21.001 14.6964C20.8704 14.2067 20.5502 13.7894 20.111 13.5367V13.5367C19.6717 13.284 19.3516 12.8666 19.221 12.377C19.0904 11.8873 19.1604 11.3659 19.4155 10.928C19.581 10.6383 19.8211 10.3982 20.111 10.2323V10.2323C21.0131 9.70289 21.3236 8.54349 20.8064 7.63361V7.63361V7.62361Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12.175" cy="11.889" r="2.63616" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg></i>
+              <span class="item-name">Rules &amp; Config</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Sidebar Upload -->
+      <div class="p-3">
+        <button class="btn btn-primary sidebar-upload-btn d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v14m0-14L8 6m4-4l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="default-icon">Upload Excel</span>
+        </button>
+      </div>
+      <!-- FX Rate pills -->
+      <div class="px-3 pb-3">
+        <h6 class="text-muted small mb-2 default-icon">FX Rates (to AED)</h6>
+        <div id="sidebarFxPills" class="d-flex flex-wrap gap-1"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======== Main Content ======== -->
+  <main class="main-content">
+    <div class="position-relative">
+      <!-- Topbar -->
+      <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+        <div class="container-fluid navbar-inner">
+          <div class="d-flex align-items-center gap-3">
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+              <i class="icon"><svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></i>
+            </div>
+            <div>
+              <h5 class="mb-0" id="pageTitle">Overview</h5>
+              <small class="text-muted" id="pageSubtitle">Portfolio-wide view across contracts, VO trackers, and subconsultants.</small>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <div class="theme-toggle-wrap d-flex align-items-center gap-2">
+              <span class="small text-muted fw-semibold">Theme</span>
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox" role="switch" id="themeToggle">
+                <label class="form-check-label small fw-semibold" for="themeToggle" id="themeToggleLabel">Light</label>
+              </div>
+            </div>
+            <span class="badge bg-soft-primary" id="recordCounterBadge">0 records</span>
+            <button class="btn btn-sm btn-outline-secondary" id="resetFiltersBtn">Reset Filters</button>
+            <button class="btn btn-sm btn-primary" id="exportCsvBtn">Export Current View</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container-fluid content-inner mt-3 py-0">
+      <!-- ===== Global Filters Card ===== -->
+      <div class="row mb-3 filters-card" id="filtersCard">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body py-3">
+              <div class="row g-2">
+                <div class="col-md-2 col-sm-4 col-6">
+                  <label class="form-label small mb-1">Tracker</label>
+                  <div class="status-filter excel-filter" id="filterTypeWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterTypeToggle">All trackers</button>
+                    <div class="status-filter-menu d-none" id="filterTypeMenu"></div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-4 col-6">
+                  <label class="form-label small mb-1">Project Manager</label>
+                  <div class="status-filter excel-filter" id="filterPMWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterPMToggle">All PMs</button>
+                    <div class="status-filter-menu d-none" id="filterPMMenu"></div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-4 col-6">
+                  <label class="form-label small mb-1">Status</label>
+                  <div class="status-filter" id="filterStatusWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterStatusToggle">
+                      All statuses
+                    </button>
+                    <div class="status-filter-menu d-none" id="filterStatusMenu"></div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-4 col-6 d-none" id="filterInvoiceStatusBlock">
+                  <label class="form-label small mb-1">Invoice Status</label>
+                  <div class="status-filter excel-filter" id="filterInvoiceStatusWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterInvoiceStatusToggle">All invoice statuses</button>
+                    <div class="status-filter-menu d-none" id="filterInvoiceStatusMenu"></div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-4 col-6">
+                  <label class="form-label small mb-1">Year</label>
+                  <div class="status-filter excel-filter" id="filterYearWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterYearToggle">All years</button>
+                    <div class="status-filter-menu d-none" id="filterYearMenu"></div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                  <label class="form-label small mb-1">Project No.</label>
+                  <div class="status-filter excel-filter" id="filterProjectNoWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterProjectNoToggle">All project nos.</button>
+                    <div class="status-filter-menu d-none" id="filterProjectNoMenu"></div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                  <label class="form-label small mb-1">Project Name</label>
+                  <div class="status-filter excel-filter" id="filterProjectNameWrap">
+                    <button type="button" class="form-select form-select-sm text-start status-filter-toggle" id="filterProjectNameToggle">All project names</button>
+                    <div class="status-filter-menu d-none" id="filterProjectNameMenu"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-chip-row d-none" id="filterSummaryChips"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Page Sections ===== -->
+      <div id="page-overview"     class="page-section active"></div>
+      <div id="page-contracts"    class="page-section"></div>
+      <div id="page-voClient"     class="page-section"></div>
+      <div id="page-voSubcon"     class="page-section"></div>
+      <div id="page-sca"          class="page-section"></div>
+      <div id="page-pipeline"    class="page-section"></div>
+      <div id="page-rulesConfig"  class="page-section"></div>
+
+      <!-- Footer -->
+      <footer class="footer mt-4">
+        <div class="footer-body">
+          <div class="d-flex flex-wrap justify-content-between align-items-center small">
+            <div>Source: <strong id="footerSourceFile">No file loaded</strong></div>
+            <div>Imported: <strong id="footerImportedAt">—</strong></div>
+            <div>AED-normalized visuals across all tracker sheets.</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- ======== Toast area ======== -->
+  <div id="toast-area" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+  <!-- ======== Upload Modal ======== -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadModalLabel">Upload Excel Workbook</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Step indicators -->
+          <div class="d-flex justify-content-center mb-4 gap-3">
+            <span class="badge bg-primary" id="uploadStep1Badge">1. Select File</span>
+            <span class="badge bg-secondary" id="uploadStep2Badge">2. Sheet Mapping</span>
+            <span class="badge bg-secondary" id="uploadStep3Badge">3. Validation</span>
+          </div>
+          <!-- Step 1: File selection -->
+          <div id="uploadStep1">
+            <div class="upload-zone" id="dropZone">
+              <div class="upload-icon mb-2">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v14m0-14L8 6m4-4l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <p class="mb-1 fw-bold">Drag &amp; drop your Excel file here</p>
+              <p class="text-muted small mb-2">or click to browse</p>
+              <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" class="d-none">
+              <button class="btn btn-outline-primary btn-sm" id="browseFileBtn">Browse Files</button>
+            </div>
+            <div id="selectedFileInfo" class="mt-3 d-none">
+              <div class="alert alert-info d-flex justify-content-between align-items-center mb-0">
+                <div><strong id="selectedFileName"></strong> <span id="selectedFileSize" class="text-muted small"></span></div>
+                <button class="btn btn-sm btn-outline-danger" id="clearFileBtn">Remove</button>
+              </div>
+            </div>
+          </div>
+          <!-- Step 2: Sheet mapping -->
+          <div id="uploadStep2" class="d-none">
+            <p class="text-muted small mb-3">Map detected sheets to tracker types. Unmatched sheets will be skipped.</p>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered" id="sheetMappingTable">
+                <thead><tr><th>Detected Sheet</th><th>Columns Found</th><th>Map To</th><th>Header Row</th><th>Status</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Step 3: Validation report -->
+          <div id="uploadStep3" class="d-none">
+            <div id="validationSummary" class="mb-3"></div>
+            <div id="mappingPreview" class="mb-3"></div>
+            <div class="accordion" id="validationAccordion"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-outline-secondary d-none" id="uploadBackBtn">Back</button>
+          <button type="button" class="btn btn-primary" id="uploadNextBtn" disabled>Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== Column Mapping Modal ======== -->
+  <div class="modal fade" id="columnMapModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Column Mapping — <span id="colMapSheetName"></span></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="colMapBody"></div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="colMapSaveBtn">Apply Mapping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== Scripts ======== -->
+  <script src="../assets/js/core/libs.min.js"></script>
+  <script src="../assets/js/core/external.min.js"></script>
+  <script src="../assets/js/hope-ui.js" defer></script>
+  <script src="../assets/vendor/xlsx/xlsx.full.min.js"></script>
+  <script src="../assets/js/contracts-dashboard.js"></script>
+</body>
+</html>
