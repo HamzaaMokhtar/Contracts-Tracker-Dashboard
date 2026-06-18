@@ -2934,12 +2934,26 @@
       })
       .then(function (buffer) {
         var wb = XLSX.read(new Uint8Array(buffer), { type: "array", cellDates: true });
-        var sheetMapping = state.rules.sheetMap;
+
+        // Build the sheet mapping the same way the upload wizard does:
+        // validateWorkbook resolves the matched sheet name (.detected) and a
+        // numeric header row for each sheet (loadMappedData requires both).
+        var report = validateWorkbook(wb);
+        var sheetMapping = report.sheets.map(function (s) {
+          var hr = (typeof s.headerRow === "number") ? s.headerRow : 0;
+          return { detected: s.detected, recordType: s.recordType, status: s.status, headerRow: hr };
+        });
+
+        // Mirror the wizard's column-mapping refinement before loading.
+        captureDetectedHeaders(wb, sheetMapping);
+        autoMatchColumnMap();
+        saveRules();
+
         var records = loadMappedData(wb, sheetMapping);
         var total = records.contracts.length + records.voClient.length + records.voSubcon.length + records.sca.length;
         if (total === 0) {
           showToast("Auto-load: file fetched but 0 records found. Sheet names may not match.", "warning");
-          console.warn("Auto-load: workbook sheets =", wb.SheetNames, "| expected mapping =", sheetMapping.map(function(s){return s.sheetName;}));
+          console.warn("Auto-load: workbook sheets =", wb.SheetNames, "| expected mapping =", state.rules.sheetMap.map(function(s){return s.sheetName;}));
           return;
         }
         state.data = {
