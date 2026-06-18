@@ -2922,7 +2922,36 @@
   }
 
   /* ================================================================
-     20. INIT
+     20. AUTO-LOAD BUNDLED DATA
+     ================================================================ */
+  var BUNDLED_DATA_URL = "../data/contracts-data.xlsx";
+
+  function autoLoadBundledData() {
+    fetch(BUNDLED_DATA_URL, { cache: "no-cache" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.arrayBuffer();
+      })
+      .then(function (buffer) {
+        var wb = XLSX.read(new Uint8Array(buffer), { type: "array", cellDates: true });
+        var sheetMapping = state.rules.sheetMap;
+        var records = loadMappedData(wb, sheetMapping);
+        state.data = {
+          sourceFile: "contracts-data.xlsx",
+          importedAt: new Date().toISOString().slice(0, 10),
+          milestoneResponsibilities: extractMilestoneResponsibilities(wb),
+          records: records
+        };
+        saveData();
+        renderAll();
+      })
+      .catch(function (err) {
+        console.warn("Auto-load bundled data failed:", err.message);
+      });
+  }
+
+  /* ================================================================
+     21. INIT
      ================================================================ */
   function init() {
     loadTheme();
@@ -2930,6 +2959,7 @@
     loadData();
     bindEvents();
     renderAll();
+    autoLoadBundledData();
   }
 
   if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", init); }
