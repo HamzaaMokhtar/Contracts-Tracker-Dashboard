@@ -2929,13 +2929,19 @@
   function autoLoadBundledData() {
     fetch(BUNDLED_DATA_URL, { cache: "no-cache" })
       .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
+        if (!res.ok) throw new Error("HTTP " + res.status + " fetching " + BUNDLED_DATA_URL);
         return res.arrayBuffer();
       })
       .then(function (buffer) {
         var wb = XLSX.read(new Uint8Array(buffer), { type: "array", cellDates: true });
         var sheetMapping = state.rules.sheetMap;
         var records = loadMappedData(wb, sheetMapping);
+        var total = records.contracts.length + records.voClient.length + records.voSubcon.length + records.sca.length;
+        if (total === 0) {
+          showToast("Auto-load: file fetched but 0 records found. Sheet names may not match.", "warning");
+          console.warn("Auto-load: workbook sheets =", wb.SheetNames, "| expected mapping =", sheetMapping.map(function(s){return s.sheetName;}));
+          return;
+        }
         state.data = {
           sourceFile: "contracts-data.xlsx",
           importedAt: new Date().toISOString().slice(0, 10),
@@ -2944,9 +2950,11 @@
         };
         saveData();
         renderAll();
+        showToast("Data loaded: " + total + " records from contracts-data.xlsx", "success");
       })
       .catch(function (err) {
-        console.warn("Auto-load bundled data failed:", err.message);
+        showToast("Auto-load failed: " + err.message, "danger");
+        console.error("Auto-load error:", err);
       });
   }
 
