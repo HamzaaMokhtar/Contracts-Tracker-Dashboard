@@ -2,6 +2,13 @@
    Contracts Dashboard — Custom Overrides on Hope UI
    ============================================================ */
 
+/* NAGA brand logo in sidebar header */
+.navbar-brand .naga-logo-full { height: 34px; width: auto; max-width: 170px; display: block; }
+.navbar-brand .naga-logo-mini { height: 36px; width: 36px; display: block; }
+/* Show full logo when expanded, square emblem when sidebar is collapsed */
+.sidebar.sidebar-mini .logo-main .logo-normal { display: none; }
+.sidebar.sidebar-mini .logo-main .logo-mini { display: block; }
+
 /* KPI row */
 .kpi-grid .card { transition: transform .15s ease, box-shadow .15s ease; }
 .kpi-grid .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
