@@ -252,6 +252,8 @@
   function badgeClass(status) {
     var s = slug(status);
     if (!s) return "badge-muted";
+    if (s === "signed") return "badge-good";
+    if (s === "unsigned") return "badge-danger";
     var rules = state.rules.statusBadges;
     for (var i = 0; i < rules.length; i++) {
       if (!rules[i].enabled) continue;
@@ -282,10 +284,16 @@
   function normalizePM(value) {
     return isInvalidPM(value) ? "" : safe(value).replace(/^\((.*)\)$/, "$1").trim();
   }
-  function normalizeStatusValue(value) {
+  function normalizeStatusValue(value, recordType) {
     var raw = safe(value);
     if (!raw) return "";
     var key = raw.toLowerCase().replace(/\s+/g, " ").trim();
+    // Contracts use the "Signed Contract/ LOA" column whose raw values are Yes/No.
+    // Surface them as the clearer "Signed" / "Unsigned" everywhere.
+    if (recordType === "Contract") {
+      if (key === "yes") return "Signed";
+      if (key === "no") return "Unsigned";
+    }
     var map = {
       "completed": "Completed",
       "in progress": "In Progress",
@@ -333,10 +341,12 @@
   }
   function repairCachedStatuses(records) {
     records = records || state.data.records || {};
+    var keyToType = { contracts: "Contract", voClient: "VO to Client", voSubcon: "VO to Subcon", sca: "Subconsultant" };
     ["contracts", "voClient", "voSubcon", "sca"].forEach(function (key) {
+      var recordType = keyToType[key];
       (records[key] || []).forEach(function (row) {
-        row.status = normalizeStatusValue(row.status);
-        if ("invoiceStatus" in row) row.invoiceStatus = normalizeStatusValue(row.invoiceStatus);
+        row.status = normalizeStatusValue(row.status, recordType);
+        if ("invoiceStatus" in row) row.invoiceStatus = normalizeStatusValue(row.invoiceStatus, recordType);
       });
     });
     (records.voClient || []).forEach(function (row) {
@@ -1359,8 +1369,8 @@
       row.amountAED = convertToAED(row.amount, row.currency);
       row.year = safe(row.year);
       row.pm = normalizePM(row.pm);
-      row.status = normalizeStatusValue(row.status);
-      if ("invoiceStatus" in row) row.invoiceStatus = normalizeStatusValue(row.invoiceStatus);
+      row.status = normalizeStatusValue(row.status, recordType);
+      if ("invoiceStatus" in row) row.invoiceStatus = normalizeStatusValue(row.invoiceStatus, recordType);
       enrichPM(row);
       return row;
     }).filter(function (r) { return r.projectNo || r.projectName || r.amount; });
