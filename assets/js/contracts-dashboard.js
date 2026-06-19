@@ -351,18 +351,23 @@
     return filterRowsWithExclusions(rows, scopedType, []);
   }
 
-  function filterRowsWithExclusions(rows, scopedType, excludedFilters) {
+  // emptyMeansAll: when true, a filter whose selection is an empty array is treated as
+  // "no constraint" instead of "match nothing". Used ONLY when computing the available
+  // options for each dropdown, so that temporarily deselecting all values in one filter
+  // does not collapse the option lists of the other filters (which would wipe their
+  // selections). Data display always passes it falsy, so empty still means "match none".
+  function filterRowsWithExclusions(rows, scopedType, excludedFilters, emptyMeansAll) {
     excludedFilters = excludedFilters || [];
     var f = state.filters;
     return rows.filter(function (row) {
       if (scopedType && row.type !== scopedType) return false;
-      if (excludedFilters.indexOf("type") === -1 && !multiFilterMatches(f.type, row.type)) return false;
-      if (excludedFilters.indexOf("pm") === -1 && !multiFilterMatches(f.pm, normalizePM(row.pm))) return false;
+      if (excludedFilters.indexOf("type") === -1 && !multiFilterMatches(f.type, row.type, emptyMeansAll)) return false;
+      if (excludedFilters.indexOf("pm") === -1 && !multiFilterMatches(f.pm, normalizePM(row.pm), emptyMeansAll)) return false;
       if (excludedFilters.indexOf("status") === -1 && Array.isArray(f.status)) {
         if (f.status.indexOf(STATUS_FILTER_ALL) !== -1) {
           // no status filtering
         } else if (!f.status.length) {
-          return false;
+          if (emptyMeansAll !== true) return false;
         } else {
         var statusKey = state.page === "overview" ? (safe(row.type) + "|" + safe(row.status)) : safe(row.status);
         if (f.status.indexOf(statusKey) === -1) return false;
@@ -372,21 +377,21 @@
         if (f.invoiceStatus.indexOf(FILTER_ALL) !== -1) {
           // no invoice status filtering
         } else if (!f.invoiceStatus.length) {
-          return false;
+          if (emptyMeansAll !== true) return false;
         } else if (f.invoiceStatus.indexOf(safe(row.invoiceStatus)) === -1) {
           return false;
         }
       }
-      if (excludedFilters.indexOf("years") === -1 && !multiFilterMatches(f.years, safe(row.year))) return false;
-      if (excludedFilters.indexOf("projectNo") === -1 && !multiFilterMatches(f.projectNo, safe(row.projectNo) || "Blank")) return false;
-      if (excludedFilters.indexOf("projectName") === -1 && !multiFilterMatches(f.projectName, safe(row.projectName) || "Blank")) return false;
+      if (excludedFilters.indexOf("years") === -1 && !multiFilterMatches(f.years, safe(row.year), emptyMeansAll)) return false;
+      if (excludedFilters.indexOf("projectNo") === -1 && !multiFilterMatches(f.projectNo, safe(row.projectNo) || "Blank", emptyMeansAll)) return false;
+      if (excludedFilters.indexOf("projectName") === -1 && !multiFilterMatches(f.projectName, safe(row.projectName) || "Blank", emptyMeansAll)) return false;
       return true;
     });
   }
 
-  function multiFilterMatches(selected, value) {
+  function multiFilterMatches(selected, value, emptyMeansAll) {
     if (!Array.isArray(selected) || selected.indexOf(FILTER_ALL) !== -1) return true;
-    if (!selected.length) return false;
+    if (!selected.length) return emptyMeansAll === true;
     return selected.indexOf(safe(value) || "Blank") !== -1;
   }
 
@@ -2497,13 +2502,13 @@
                     state.page === "voClient" ? "VO to Client" :
                     state.page === "voSubcon" ? "VO to Subcon" :
                     state.page === "sca" ? "Subconsultant" : null;
-    var rowsForType = filterRowsWithExclusions(all, pageScope, ["type"]);
-    var rowsForPM = filterRowsWithExclusions(all, pageScope, ["pm"]);
-    var rowsForStatus = filterRowsWithExclusions(all, pageScope, ["status"]);
-    var rowsForInvoiceStatus = filterRowsWithExclusions(all, pageScope, ["invoiceStatus"]);
-    var rowsForYear = filterRowsWithExclusions(all, pageScope, ["years"]);
-    var rowsForProjectNo = filterRowsWithExclusions(all, pageScope, ["projectNo"]);
-    var rowsForProjectName = filterRowsWithExclusions(all, pageScope, ["projectName"]);
+    var rowsForType = filterRowsWithExclusions(all, pageScope, ["type"], true);
+    var rowsForPM = filterRowsWithExclusions(all, pageScope, ["pm"], true);
+    var rowsForStatus = filterRowsWithExclusions(all, pageScope, ["status"], true);
+    var rowsForInvoiceStatus = filterRowsWithExclusions(all, pageScope, ["invoiceStatus"], true);
+    var rowsForYear = filterRowsWithExclusions(all, pageScope, ["years"], true);
+    var rowsForProjectNo = filterRowsWithExclusions(all, pageScope, ["projectNo"], true);
+    var rowsForProjectName = filterRowsWithExclusions(all, pageScope, ["projectName"], true);
     var pmOpts = uniq(rowsForPM.map(function(r){return normalizePM(r.pm);}));
     var yearOpts = uniq(rowsForYear.map(function(r){return safe(r.year);}));
     var projectNoOpts = uniq(rowsForProjectNo.map(function(r){return safe(r.projectNo) || "Blank";}));
