@@ -1100,73 +1100,6 @@
     return html;
   }
 
-  function buildMilestoneCompletionBars(contracts) {
-    var total = contracts.length || 1;
-    var html = '<div class="card"><div class="card-header"><h6 class="card-title mb-0">Milestone Completion Rate</h6><small class="text-muted">Percentage of contracts that completed each stage</small></div><div class="card-body">';
-    CONTRACT_MILESTONES.forEach(function (ms) {
-      var count = contracts.filter(function (r) { return hasMilestoneDate(r, ms.field); }).length;
-      var pct = Math.round((count / total) * 100);
-      html += '<div class="d-flex align-items-center gap-2 mb-2">' +
-        '<span class="text-truncate small" style="min-width:130px;max-width:160px">' + escHtml(ms.label) + '</span>' +
-        '<div class="flex-grow-1 completion-bar-track"><div class="completion-bar-fill" style="width:' + pct + '%"></div></div>' +
-        '<span class="small fw-bold text-nowrap">' + pct + '% <small class="text-muted">(' + count + '/' + contracts.length + ')</small></span></div>';
-    });
-    html += '</div></div>';
-    return html;
-  }
-
-  function buildBottleneckChart(containerId, contracts) {
-    var stageCounts = [];
-    var notStarted = 0;
-    contracts.forEach(function (row) {
-      var last = getLastCompletedMilestone(row);
-      if (!last) { notStarted++; return; }
-      var existing = stageCounts.find(function (s) { return s.field === last.field; });
-      if (existing) existing.value++;
-      else stageCounts.push({ field: last.field, label: last.label, value: 1 });
-    });
-    var ordered = [];
-    if (notStarted > 0) ordered.push({ label: "Not Started", value: notStarted });
-    CONTRACT_MILESTONES.forEach(function (ms) {
-      var found = stageCounts.find(function (s) { return s.field === ms.field; });
-      ordered.push({ label: ms.label, value: found ? found.value : 0 });
-    });
-
-    var cats = ordered.map(function (i) { return i.label; });
-    var vals = ordered.map(function (i) { return i.value; });
-    var colors = ordered.map(function (item) {
-      if (item.label === "Not Started") return "#8898aa";
-      if (item.label === "Contract Collected") return "#2dce89";
-      return "#fbb03b";
-    });
-    var html = '<div class="card"><div class="card-header"><h6 class="card-title mb-0">Pipeline Bottleneck</h6><small class="text-muted">Where contracts are currently stopped (last completed stage)</small></div><div class="card-body"><div id="' + containerId + '" class="chart-container"></div></div></div>';
-    setTimeout(function () {
-      var el = document.getElementById(containerId);
-      if (!el || !vals.length) return;
-      if (state.charts[containerId]) { try { state.charts[containerId].destroy(); } catch(e){} }
-      state.charts[containerId] = new ApexCharts(el, {
-        chart: { type: "bar", height: 300, toolbar: { show: false } },
-        series: [{ name: "Projects", data: vals }],
-        xaxis: { categories: cats, labels: { style: { fontSize: "11px" } } },
-        yaxis: { labels: { formatter: function (v) { return Math.round(v); } } },
-        plotOptions: { bar: { horizontal: true, borderRadius: 4, distributed: true } },
-        colors: colors,
-        legend: {
-          show: true,
-          position: "bottom",
-          horizontalAlign: "left",
-          fontSize: "12px",
-          labels: { colors: "#50607a" },
-          markers: { radius: 12 }
-        },
-        tooltip: { y: { formatter: function (v) { return v + " project" + (v !== 1 ? "s" : ""); } } },
-        dataLabels: { enabled: true, style: { fontSize: "11px" } }
-      });
-      state.charts[containerId].render();
-    }, 60);
-    return html;
-  }
-
   function bottleneckColor(label, index) {
     var dept = normalizeDepartmentLabel(label);
     var key = slug(dept);
@@ -1370,79 +1303,6 @@
       "Pending milestone counts on this tracker",
       items
     );
-  }
-
-  function buildFunnelChart(containerId, contracts) {
-    var cats = CONTRACT_MILESTONES.map(function (ms) { return ms.label; });
-    var vals = CONTRACT_MILESTONES.map(function (ms) {
-      return contracts.filter(function (r) { return hasMilestoneDate(r, ms.field); }).length;
-    });
-    var html = '<div class="card"><div class="card-header"><h6 class="card-title mb-0">Pipeline Funnel</h6><small class="text-muted">How many contracts completed each milestone (cumulative drop-off)</small></div><div class="card-body"><div id="' + containerId + '" class="chart-container"></div></div></div>';
-    setTimeout(function () {
-      var el = document.getElementById(containerId);
-      if (!el) return;
-      if (state.charts[containerId]) { try { state.charts[containerId].destroy(); } catch(e){} }
-      state.charts[containerId] = new ApexCharts(el, {
-        chart: { type: "bar", height: 320, toolbar: { show: false } },
-        series: [{ name: "Completed", data: vals }],
-        xaxis: { categories: cats, labels: { style: { fontSize: "10px" }, rotate: -35, rotateAlways: true } },
-        yaxis: { labels: { formatter: function (v) { return Math.round(v); } } },
-        plotOptions: { bar: { borderRadius: 4, columnWidth: "60%" } },
-        colors: ["#2dce89"],
-        tooltip: { y: { formatter: function (v) { return v + " of " + contracts.length + " contracts"; } } },
-        dataLabels: { enabled: true, style: { fontSize: "11px" } }
-      });
-      state.charts[containerId].render();
-    }, 60);
-    return html;
-  }
-
-  function buildKanbanBoard(contracts) {
-    var columns = [{ key: "notStarted", label: "Not Started", items: [] }];
-    CONTRACT_MILESTONES.forEach(function (ms) {
-      columns.push({ key: ms.field, label: ms.label, items: [] });
-    });
-
-    contracts.forEach(function (row) {
-      var last = getLastCompletedMilestone(row);
-      var colKey = last ? last.field : "notStarted";
-      var col = columns.find(function (c) { return c.key === colKey; });
-      if (col) col.items.push(row);
-    });
-
-    var html = '<div class="card"><div class="card-header"><h6 class="card-title mb-0">Contract Kanban</h6><small class="text-muted">Projects grouped by their last completed milestone — scroll horizontally to see all stages</small></div><div class="card-body p-0"><div class="kanban-board-wrap p-3"><div class="kanban-board">';
-    columns.forEach(function (col) {
-      var isComplete = col.key === "ms_signedContractCollected";
-      var colClass = "kanban-column" + (isComplete ? " col-complete" : "") + (col.key === "notStarted" ? " col-not-started" : "");
-      html += '<div class="' + colClass + '">';
-      html += '<div class="kanban-column-header">' + escHtml(col.label) + ' <span class="count-badge bg-soft-primary">' + col.items.length + '</span></div>';
-      html += '<div class="kanban-column-cards">';
-      if (col.items.length === 0) {
-        html += '<div class="text-muted text-center small py-3">No projects</div>';
-      } else {
-        col.items.sort(function (a, b) { return (b.amountAED || 0) - (a.amountAED || 0); });
-        col.items.slice(0, 20).forEach(function (row) {
-          var done = getMilestonesDoneCount(row);
-          var allDone = done === CONTRACT_MILESTONES.length;
-          var cardClass = "kanban-card" + (allDone ? " card-done" : done > 0 ? " card-pending" : "");
-          var dateVal = "";
-          if (col.key !== "notStarted") dateVal = milestoneDisplayDate(row, col.key) || "";
-          html += '<div class="' + cardClass + '">';
-          html += '<div class="card-project">' + escHtml(safe(row.projectName) || "Unnamed") + '</div>';
-          html += '<div class="card-meta">' + escHtml(safe(row.projectNo) || "—");
-          if (row.pm) html += ' &middot; ' + escHtml(row.pm);
-          html += '</div>';
-          if (dateVal && dateVal !== "—") html += '<div class="card-meta">' + dateVal + '</div>';
-          if (row.amountAED) html += '<div class="card-value">' + fmtMoney(row.amountAED) + '</div>';
-          html += '</div>';
-        });
-        if (col.items.length > 20) html += '<div class="text-muted text-center small py-1">+' + (col.items.length - 20) + ' more</div>';
-      }
-      html += '</div>';
-      html += '</div>';
-    });
-    html += '</div></div></div></div>';
-    return html;
   }
 
   function buildStatusProgressHtml(status) {
@@ -1738,7 +1598,6 @@
     voClient:     { title: "VO to Client",         subtitle: "Client-facing variation orders, statuses, and distribution." },
     voSubcon:     { title: "VO to Subconsultant",  subtitle: "Subconsultant variations, exposure, and team leader distribution." },
     sca:          { title: "Subconsultants",       subtitle: "Issued subconsultant appointments, vendors, and status." },
-    pipeline:     { title: "Project Pipeline",     subtitle: "Visual milestone tracking — see where each contract is and what's pending." },
     rulesConfig:  { title: "Rules & Configuration", subtitle: "Manage status rules, FX rates, sheet mappings, PM lookup, and master dictionaries." }
   };
 
@@ -1989,63 +1848,6 @@
     ];
     html += buildTable(rows, cols, "tbl-sca");
     document.getElementById("page-sca").innerHTML = html;
-  }
-
-  /* ================================================================
-     12b. PROJECT PIPELINE PAGE
-     ================================================================ */
-  function renderPipeline() {
-    var contracts = filterRows(state.data.records.contracts, "Contract");
-    var doneCount = contracts.filter(function (r) { return getMilestonesDoneCount(r) === CONTRACT_MILESTONES.length; }).length;
-    var inProgressCount = contracts.filter(function (r) { var d = getMilestonesDoneCount(r); return d > 0 && d < CONTRACT_MILESTONES.length; }).length;
-    var notStartedCount = contracts.filter(function (r) { return getMilestonesDoneCount(r) === 0; }).length;
-
-    var html = buildKPIs([
-      { label: "Total Contracts", value: fmtNumber(contracts.length), meta: "In pipeline" },
-      { label: "Fully Signed", value: fmtNumber(doneCount), meta: "All milestones complete" },
-      { label: "In Progress", value: fmtNumber(inProgressCount), meta: "Partially complete" },
-      { label: "Not Started", value: fmtNumber(notStartedCount), meta: "No milestones reached" }
-    ]);
-
-    html += '<div class="row mb-3"><div class="col-md-6">' +
-      buildFunnelChart("pipe-funnel", contracts) +
-      '</div><div class="col-md-6">' +
-      buildBottleneckChart("pipe-bottleneck", contracts) +
-      '</div></div>';
-
-    html += '<div class="row mb-3"><div class="col-12">' +
-      buildMilestoneCompletionBars(contracts) +
-      '</div></div>';
-
-    html += '<div class="row mb-3"><div class="col-12">' +
-      buildKanbanBoard(contracts) +
-      '</div></div>';
-
-    html += '<div class="row mb-3"><div class="col-12">' +
-      '<div class="card"><div class="card-header d-flex justify-content-between align-items-center">' +
-      '<div><h6 class="card-title mb-0">Per-Project Pipeline</h6><small class="text-muted">Detailed milestone progress for each contract (' + contracts.length + ' projects) — scroll to see all</small></div></div>' +
-      '<div class="card-body"><div class="pipeline-project-list">';
-    var sorted = contracts.slice().sort(function (a, b) {
-      var da = getMilestonesDoneCount(a), db = getMilestonesDoneCount(b);
-      if (da !== db) return da - db;
-      return (b.amountAED || 0) - (a.amountAED || 0);
-    });
-    sorted.forEach(function (row) {
-      html += '<div class="pipeline-project-card">';
-      html += '<div class="pipeline-project-header">';
-      html += '<div><div class="project-title">' + escHtml(safe(row.projectName) || "Unnamed Project") + '</div>';
-      html += '<div class="project-no">' + escHtml(safe(row.projectNo) || "No project no.") + '</div></div>';
-      html += '<div class="project-details">';
-      if (row.pm) html += '<div class="detail-item">PM: <strong>' + escHtml(row.pm) + '</strong></div>';
-      if (row.client) html += '<div class="detail-item">Client: <strong>' + escHtml(row.client) + '</strong></div>';
-      if (row.amountAED) html += '<div class="detail-item">Value: <strong>' + fmtMoney(row.amountAED) + '</strong></div>';
-      html += '</div></div>';
-      html += buildProjectStepperHtml(row, false);
-      html += '</div>';
-    });
-    html += '</div></div></div></div></div>';
-
-    document.getElementById("page-pipeline").innerHTML = html;
   }
 
   /* ================================================================
@@ -2691,7 +2493,7 @@
   function initFilters() {
     migrateFilterState();
     var all = allData();
-    var pageScope = state.page === "contracts" || state.page === "pipeline" ? "Contract" :
+    var pageScope = state.page === "contracts" ? "Contract" :
                     state.page === "voClient" ? "VO to Client" :
                     state.page === "voSubcon" ? "VO to Subcon" :
                     state.page === "sca" ? "Subconsultant" : null;
@@ -2801,7 +2603,6 @@
       case "voClient": renderVOClient(); break;
       case "voSubcon": renderVOSubcon(); break;
       case "sca": renderSCA(); break;
-      case "pipeline": renderPipeline(); break;
       case "rulesConfig": renderRulesConfig(); break;
     }
   }
@@ -2810,12 +2611,11 @@
      18. CSV EXPORT
      ================================================================ */
   function exportCSV() {
-    var typeMap = { overview: null, contracts: "Contract", voClient: "VO to Client", voSubcon: "VO to Subcon", sca: "Subconsultant", pipeline: "Contract", rulesConfig: null };
+    var typeMap = { overview: null, contracts: "Contract", voClient: "VO to Client", voSubcon: "VO to Subcon", sca: "Subconsultant", rulesConfig: null };
     var source = state.page === "contracts" ? state.data.records.contracts :
                  state.page === "voClient" ? state.data.records.voClient :
                  state.page === "voSubcon" ? state.data.records.voSubcon :
-                 state.page === "sca" ? state.data.records.sca :
-                 state.page === "pipeline" ? state.data.records.contracts : allData();
+                 state.page === "sca" ? state.data.records.sca : allData();
     var rows = filterRows(source, typeMap[state.page]);
     if (!rows.length) { showToast("No rows to export.", "warning"); return; }
     var headers = RECORD_FIELDS;
