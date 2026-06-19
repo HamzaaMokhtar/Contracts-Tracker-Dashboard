@@ -1707,8 +1707,8 @@
     var html = buildKPIs([
       { label: "Total No. of Contracts", value: fmtNumber(rows.length), meta: "" },
       { label: "Contract Value", value: fmtMoney(sumAED(rows)), meta: "AED normalized" },
-      { label: "Signed", value: fmtNumber(rows.filter(function(r){return /^yes$/i.test(safe(r.status));}).length), meta: "" },
-      { label: "Pending", value: fmtNumber(rows.filter(function(r){return /^no$/i.test(safe(r.status));}).length), meta: "" }
+      { label: "Signed", value: fmtNumber(rows.filter(function(r){return /^signed$/i.test(safe(r.status));}).length), meta: "" },
+      { label: "Unsigned", value: fmtNumber(rows.filter(function(r){return /^unsigned$/i.test(safe(r.status));}).length), meta: "" }
     ]);
     html += '<div class="row mb-3"><div class="col-md-6">' +
       buildDonutChart("c-donut-status", "Contract Status Split", "Pipeline statuses", topCounts(rows, "status", 7), "Rows") +
